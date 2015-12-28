@@ -5,6 +5,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import android.app.ProgressDialog;
+import android.widget.ProgressBar;
 
 public class ProgressIndicator extends CordovaPlugin {
 
@@ -22,8 +23,8 @@ public class ProgressIndicator extends CordovaPlugin {
             callbackContext.success();
             return true;
         } else if (action.equals("showSimpleWithLabel")) {
-            String title = args.getString(1);
-            show(title);
+            String text = args.getString(1);
+            show("", text, false);
             callbackContext.success();
             return true;
         } else if (action.equals("showSimpleWithLabelDetail")) {
@@ -56,7 +57,8 @@ public class ProgressIndicator extends CordovaPlugin {
      */
     public void show() {
         progressIndicator = new ProgressDialog(cordova.getActivity());
-		progressIndicator.show();
+        progressIndicator.show();
+        progressIndicator.setContentView(new ProgressBar(cordova.getActivity()));
     }
 
     /**
