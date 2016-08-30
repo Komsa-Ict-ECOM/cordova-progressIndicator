@@ -10,10 +10,11 @@ import android.widget.ProgressBar;
 public class ProgressIndicator extends CordovaPlugin {
 
     private ProgressDialog progressIndicator = null;
-	private static final String LOG_TAG = "ProgressIndicator";
+    private static final String LOG_TAG = "ProgressIndicator";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
         if (action.equals("show")) {
             show();
             callbackContext.success();
@@ -35,7 +36,7 @@ public class ProgressIndicator extends CordovaPlugin {
             return true;
         } else if (action.equals("showText")) {
             String title = args.getString(1);
-			String text = args.getString(2);
+            String text = args.getString(2);
             show(title, text, false);
             callbackContext.success();
             return true;
@@ -45,48 +46,40 @@ public class ProgressIndicator extends CordovaPlugin {
             return true;
         } else {
             callbackContext.error("Not supported call. On Android we only support show, showSimple, showSimpleWithLabel and showSimpleWithLabelDetail");
-		}
+        }
 
         return false;
     }
 
     /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
+     * This shows the ProgressDialog
      */
     public void show() {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-        progressIndicator.show();
+        progressIndicator = ProgressDialog.show(cordova.getActivity(), null, null, true, false);
         progressIndicator.setContentView(new ProgressBar(cordova.getActivity()));
     }
 
     /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
+     * This shows the ProgressDialog
      */
     public void show(String text) {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-		progressIndicator.setTitle(text);
-		progressIndicator.show();
+        progressIndicator = ProgressDialog.show(cordova.getActivity(), text, null, true, false);
     }
 
     /**
-     * This show the ProgressDialog
-     *
-     * @param text - Message to display in the Progress Dialog
+     * This shows the ProgressDialog
      */
     public void show(String title, String detail, Boolean withTitle) {
-        progressIndicator = new ProgressDialog(cordova.getActivity());
-		if(withTitle)
-			progressIndicator.setTitle(title);
-		progressIndicator.setMessage(detail);
-		progressIndicator.show();
+        if(withTitle) {
+            progressIndicator = ProgressDialog.show(cordova.getActivity(), title, detail, true, false);
+        }
+        else {
+            progressIndicator = ProgressDialog.show(cordova.getActivity(), null, detail, true, false);
+        }
     }
 
     /**
-     * This hide the ProgressDialog
+     * This hides the ProgressDialog
      */
     public void hide() {
         if (progressIndicator != null) {
