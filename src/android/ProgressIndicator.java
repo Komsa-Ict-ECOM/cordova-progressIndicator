@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import android.app.ProgressDialog;
 import android.widget.ProgressBar;
+import android.graphics.drawable.ColorDrawable;
 
 public class ProgressIndicator extends CordovaPlugin {
 
